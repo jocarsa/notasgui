@@ -1,6 +1,11 @@
 import tkinter as tk                        # Importo la librería de GUI
 from tkinter import ttk                     # Importo la nueva librería TTK
 
+# DECLARO FUNCIONES PARA EL PROGRAMA
+
+def iniciaSesion():                         # Función de inicio de sesión
+    print("Vamos a iniciar sesión")         # Imprime un mensaje en pantalla
+
 # CREACIÓN DE LA VENTANA PRINCIPAL Y ESTILO DE LA VENTANA #
 
 raiz = tk.Tk()                              # Creo una interfaz gráfica de usuario
@@ -29,7 +34,7 @@ inputemail = ttk.Entry(raiz)                # Creo una entrada para que el usuar
 inputemail.insert(0,'Introduce tu email')   # Creo  un texto de inicio en la entrada 
 inputemail.pack(pady=10)                    # Empaqueto la entrada
 
-botonlogin = ttk.Button(raiz,text="Enviar") # Creo el boton de iniciar sesion
+botonlogin = ttk.Button(raiz,text="Enviar",command=iniciaSesion) # Creo el boton de iniciar sesion
 botonlogin.pack(pady=10,expand=True)        # Lo empaqueto
 
 # INTENTO INTRODUCIR ANTIALIAS EN WINDOWS Y LANZO EL BUCLE
