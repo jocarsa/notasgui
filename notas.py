@@ -3,6 +3,9 @@ import tkinter as tk                        # Importo la librería de GUI
 raiz = tk.Tk()                              # Creo una interfaz gráfica de usuario
 raiz.title("Notas v0.01")                   # Especifico el título de la ventana
 raiz.geometry('200x200+20+50')              # Geomtria de la ventana y margen con la pantalla
+raiz.attributes("-topmost",True)            # Siempre encima del resto de las ventanas
+raiz.attributes("-alpha",0.9)               # Añado  un efecto de transparencia
+raiz.attributes("-toolwindow",True)         # Convierte la ventana en una ventana auxiliar
 
 try:                                        # Intento ejecutar
     from ctypes import windll               # Importo la libreria específica de GUI de Windows
