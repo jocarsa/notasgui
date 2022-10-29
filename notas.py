@@ -97,16 +97,17 @@ def iniciaSesion():                         # Función de inicio de sesión
             cursor.execute('SELECT * FROM NOTAS')
             datos = cursor.fetchall()
             for i in datos:
-                print("Hay una nota en la base de datos")
-                print(i)
+                #print("Hay una nota en la base de datos")
+                #print(i)
                 cargaNota(i[1],i[2],i[3])
                 notas.append(Nota(i[1],i[2],i[3]))
                 #identificador = identificador + 1
-
+            print("Voy a imprimir las notas que he cargado-------------------------------------------")
             for i in notas:                                                         # Para cada una de las notas
                 print(i.texto)                                                      # Imprimo su contenido
                 print(i.color)                                                      # Imprimo su color
                 print(i.fecha)                                                      # Imprimo su fecha
+                print("----------------------")
             
         else:                               # en el caso de que no exista
             print("el usuario no es correcto")
@@ -119,7 +120,7 @@ def guardaNotas():
         existe = False
         cursor.execute('SELECT * FROM NOTAS WHERE fecha = "'+i.fecha+'"')
         datos = cursor.fetchall()
-        for i in datos:
+        for j in datos:
             existe = True
             print("La nota que intentas introducir existe")
         if existe == False:
@@ -156,14 +157,14 @@ def cargaNota(mitexto,color,fecha):
     global identificador                    # Traigo la variable global identificador
     fecha = str(int(time.time()))           # Saco la fecha actual
     
-    notas.append(Nota('','',fecha))   # Añado una nota a la lista
+    #notas.append(Nota('','',fecha))   # Añado una nota a la lista
     
     
-    for i in notas:                                                         # Para cada una de las notas
+    #for i in notas:                                                         # Para cada una de las notas
 
-        print(i.texto)                                                      # Imprimo su contenido
-        print(i.color)                                                      # Imprimo su color
-        print(i.fecha)                                                      # Imprimo su fecha
+        #print(i.texto)                                                      # Imprimo su contenido
+        #print(i.color)                                                      # Imprimo su color
+        #print(i.fecha)                                                      # Imprimo su fecha
     
     ventananuevanota = tk.Toplevel()        # Nueva ventana flotante
     anchura = 300                           # Defino la anchura como un valor
