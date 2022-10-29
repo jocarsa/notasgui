@@ -81,7 +81,12 @@ def iniciaSesion():                         # Función de inicio de sesión
             print("el usuario no es correcto")
             raiz.after(3000,lambda:raiz.destroy())  # Cierro la ventana despues de 3 segundos
 def creaNota():
-    pass
+    ventananuevanota = tk.Toplevel()        # Nueva ventana flotante
+    anchura = 200                           # Defino la anchura como un valor
+    altura = 200                            # Defino la altura como otro valor
+    ventananuevanota.geometry(str(anchura)+'x'+str(altura)+'+100+100')              # Geometria de la ventana y margen con la pantalla
+
+    
 
 # CREACIÓN DE LA VENTANA PRINCIPAL Y ESTILO DE LA VENTANA #
 
