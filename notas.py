@@ -12,6 +12,11 @@ raiz.resizable(0,0)                         # Impido que el usuario pueda redime
 estilo = ttk.Style()                        # Añado soporte para estilos
 estilo.theme_use('classic')                 # Selecciono el estilo clásico de aplicaciones
 
+# AÑADIMOS WIDGETS A LA VENTANA
+
+version = tk.Label(raiz,text="Notas v0.01") # Creamos un label
+version.pack()                              # Lo añadimos a la ventana
+
 # INTENTO INTRODUCIR ANTIALIAS EN WINDOWS Y LANZO EL BUCLE
 
 try:                                        # Intento ejecutar
