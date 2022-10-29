@@ -75,10 +75,13 @@ def iniciaSesion():                         # Función de inicio de sesión
                 )                           # Muestro la imagen en el label
             etiquetaicono.image = iconoaplicacion   # especifico de nuevo la imagen
             etiquetaicono.pack()            # Empaqueto
+            botonnuevanota = ttk.Button(marco2,text="Nueva nota",command=creaNota) # Creo el boton de iniciar sesion
+            botonnuevanota.pack(pady=10,expand=True)        # Lo empaqueto
         else:                               # en el caso de que no exista
             print("el usuario no es correcto")
             raiz.after(3000,lambda:raiz.destroy())  # Cierro la ventana despues de 3 segundos
-        
+def creaNota():
+    pass
 
 # CREACIÓN DE LA VENTANA PRINCIPAL Y ESTILO DE LA VENTANA #
 
