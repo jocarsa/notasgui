@@ -34,6 +34,17 @@ def iniciaSesion():                         # Función de inicio de sesión
     print("El nombre de usuario es:"+varusuario.get())
     print("La contraseña de usuario es:"+varcontrasena.get())
     print("El email de usuario es:"+varemail.get())
+    # Voy a comprobar si existe un usuario en la base de datos
+    cursor = conexion.cursor()              # Creo un cursor
+    cursor.execute('SELECT * FROM usuarios')# Ejecuto una petición de seleccionar usuarios
+    datos = cursor.fetchall()               # Cargo los datos
+    numerousuarios = 0                      # Creo una variable contador
+    for i in datos:                         # Para cada uno de los registros devueltos
+        numerousuarios = numerousuarios + 1 # Le sumo un valor al contador
+    if(numerousuarios == 0):                # Si no hay usuarios
+        print("actualmente no hay ningun usuario en la base de datos")
+    else:                                   # En el caso de que haya usuarios
+        print("sí que existe un usuario en la base de datos")
 
 # CREACIÓN DE LA VENTANA PRINCIPAL Y ESTILO DE LA VENTANA #
 
