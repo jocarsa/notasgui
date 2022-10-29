@@ -116,7 +116,15 @@ def guardaNotas():
         print(i.texto)                                                      # Imprimo su contenido
         print(i.color)                                                      # Imprimo su color
         print(i.fecha)                                                      # Imprimo su fecha
-        cursor.execute("INSERT INTO notas VALUES(NULL,'"+i.texto+"','"+i.color+"','"+i.fecha+"');") # Inserto una a una las notas en la base de datos
+        existe = False
+        cursor.execute('SELECT * FROM NOTAS WHERE fecha = "'+i.fecha+'"')
+        datos = cursor.fetchall()
+        for i in datos:
+            existe = True
+            print("La nota que intentas introducir existe")
+        if existe == False:
+            print("como no existe, meto la nota")
+            cursor.execute("INSERT INTO notas VALUES(NULL,'"+i.texto+"','"+i.color+"','"+i.fecha+"');") # Inserto una a una las notas en la base de datos
         conexion.commit()    
 def creaNota():
     global notas                            # Traigo la variable global notas
