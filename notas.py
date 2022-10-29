@@ -55,18 +55,26 @@ def iniciaSesion():                         # Función de inicio de sesión
             AND email = "'''+varemail.get()+'''"
             ''')                            # Realizo una consulta a la base de datos
         existe = False
+        existe = True                       # Fuerzo para no tener que validar durante el desarrollo
         datos = cursor.fetchall()           # Cargo los datos
         for i in datos:                         # Para cada uno de los registros devueltos
             existe = True                   # Actualizo el valor
         if existe == True:                  # en el caso de que exista        
             print("el usuario que has introducido es correcto")
-            ventanaprincipal = tk.Tk()                              # Creo una interfaz gráfica de usuario
-            ventanaprincipal.title("Notas v0.01")                   # Especifico el título de la ventana
-            ventanaprincipal.geometry('200x200+20+50')              # Geomtria de la ventana y margen con la pantalla
-            ventanaprincipal.attributes("-topmost",True)            # Siempre encima del resto de las ventanas
-            ventanaprincipal.attributes("-alpha",0.9)               # Añado  un efecto de transparencia
-            ventanaprincipal.resizable(0,0)                         # Impido que el usuario pueda redimensionar la ventana
-            raiz.destroy()                                          # Elimino la ventana principal
+            marco.destroy()                # Elimino la ventana principal
+            marco2 = ttk.Frame(raiz)        # Creo un nuevo marco
+            marco2.pack()                   # Empaqueto el marco
+                                                    
+            iconoaplicacion = tk.PhotoImage(file="icono.png")   # Cargo una  imagen
+            etiquetaicono = ttk.Label(
+                marco2,
+                text="Notas v0.01",
+                image = iconoaplicacion,
+                compound=tk.TOP,
+                font=("Arial",14)
+                )                           # Muestro la imagen en el label
+            etiquetaicono.image = iconoaplicacion   # especifico de nuevo la imagen
+            etiquetaicono.pack()            # Empaqueto
         else:                               # en el caso de que no exista
             print("el usuario no es correcto")
             raiz.after(3000,lambda:raiz.destroy())  # Cierro la ventana despues de 3 segundos
@@ -89,24 +97,28 @@ varusuario = tk.StringVar()                 # Variable para almacenar el usuario
 varcontrasena = tk.StringVar()              # Variable para almacenar la contraseña
 varemail = tk.StringVar()                   # Variable para almacenar el email
 
+
 # AÑADIMOS WIDGETS A LA VENTANA
 
-version = tk.Label(raiz,text="Notas v0.01") # Creamos un label
+marco = ttk.Frame(raiz)
+marco.pack()
+
+version = tk.Label(marco,text="Notas v0.01") # Creamos un label
 version.pack()                              # Lo añadimos a la ventana
 
-inputusuario = ttk.Entry(raiz,textvariable = varusuario)              # Creo una entrada para que el usuario diga quien es
+inputusuario = ttk.Entry(marco,textvariable = varusuario)              # Creo una entrada para que el usuario diga quien es
 inputusuario.insert(0,'Introduce tu usuario')# Creo  un texto de inicio en la entrada 
 inputusuario.pack(pady=10)                  # Empaqueto la entrada
 
-inputcontrasena = ttk.Entry(raiz,textvariable = varcontrasena)           # Creo una entrada para que el usuario diga quien es
+inputcontrasena = ttk.Entry(marco,textvariable = varcontrasena)           # Creo una entrada para que el usuario diga quien es
 inputcontrasena.insert(0,'Introduce tu contraseña')   # Creo  un texto de inicio en la entrada 
 inputcontrasena.pack(pady=10)               # Empaqueto la entrada
 
-inputemail = ttk.Entry(raiz,textvariable = varemail)                # Creo una entrada para que el usuario diga quien es
+inputemail = ttk.Entry(marco,textvariable = varemail)                # Creo una entrada para que el usuario diga quien es
 inputemail.insert(0,'Introduce tu email')   # Creo  un texto de inicio en la entrada 
 inputemail.pack(pady=10)                    # Empaqueto la entrada
 
-botonlogin = ttk.Button(raiz,text="Enviar",command=iniciaSesion) # Creo el boton de iniciar sesion
+botonlogin = ttk.Button(marco,text="Enviar",command=iniciaSesion) # Creo el boton de iniciar sesion
 botonlogin.pack(pady=10,expand=True)        # Lo empaqueto
 
 # INTENTO INTRODUCIR ANTIALIAS EN WINDOWS Y LANZO EL BUCLE
