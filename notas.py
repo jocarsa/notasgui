@@ -10,7 +10,7 @@ raiz.attributes("-topmost",True)            # Siempre encima del resto de las ve
 raiz.attributes("-alpha",0.9)               # Añado  un efecto de transparencia
 raiz.resizable(0,0)                         # Impido que el usuario pueda redimensionar la ventana
 estilo = ttk.Style()                        # Añado soporte para estilos
-estilo.theme_use('classic')                 # Selecciono el estilo clásico de aplicaciones
+estilo.theme_use('default')                 # Selecciono el estilo clásico de aplicaciones
 
 # AÑADIMOS WIDGETS A LA VENTANA
 
@@ -28,6 +28,9 @@ inputcontrasena.pack(pady=10)               # Empaqueto la entrada
 inputemail = ttk.Entry(raiz)                # Creo una entrada para que el usuario diga quien es
 inputemail.insert(0,'Introduce tu email')   # Creo  un texto de inicio en la entrada 
 inputemail.pack(pady=10)                    # Empaqueto la entrada
+
+botonlogin = ttk.Button(raiz,text="Enviar") # Creo el boton de iniciar sesion
+botonlogin.pack(pady=10,expand=True)        # Lo empaqueto
 
 # INTENTO INTRODUCIR ANTIALIAS EN WINDOWS Y LANZO EL BUCLE
 
