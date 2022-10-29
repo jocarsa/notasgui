@@ -1,6 +1,7 @@
 import tkinter as tk                        # Importo la librería de GUI
 from tkinter import ttk                     # Importo la nueva librería TTK
-import sqlite3 as bd                                                    # Importo la librería SQLiteimport sqlite3 as bd                                                    # Importo la librería SQLite
+import sqlite3 as bd                                                    # Importo la librería SQLiteimport sqlite3 as bd
+from tkinter.colorchooser import askcolor # Importo el selector de color
 
 # CONEXIÓN INICIAL CON LA BASE DE DATOS
 
@@ -82,11 +83,17 @@ def iniciaSesion():                         # Función de inicio de sesión
             raiz.after(3000,lambda:raiz.destroy())  # Cierro la ventana despues de 3 segundos
 def creaNota():
     ventananuevanota = tk.Toplevel()        # Nueva ventana flotante
-    anchura = 200                           # Defino la anchura como un valor
-    altura = 200                            # Defino la altura como otro valor
+    anchura = 300                           # Defino la anchura como un valor
+    altura = 350                            # Defino la altura como otro valor
     ventananuevanota.geometry(str(anchura)+'x'+str(altura)+'+100+100')              # Geometria de la ventana y margen con la pantalla
+    texto = tk.Text(ventananuevanota,bg="white")
+    texto.pack()
+    selectorcolor = ttk.Button(ventananuevanota,text="Cambiar color",command=lambda:cambiaColor(ventananuevanota))
+    selectorcolor.pack()
 
-    
+def cambiaColor(ventana):                   # Creo la funcion de cambio de color
+    nuevocolor = askcolor(title="Selecciona un color")  # Saco un selector de color
+    ventana.configure(bg = nuevocolor[1])   # Cambio el color de fondo a la ventana seleccionada
 
 # CREACIÓN DE LA VENTANA PRINCIPAL Y ESTILO DE LA VENTANA #
 
