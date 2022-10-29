@@ -1,4 +1,5 @@
 import tkinter as tk                        # Importo la librería de GUI
+from tkinter import ttk                     # Importo la nueva librería TTK
 
 raiz = tk.Tk()                              # Creo una interfaz gráfica de usuario
 raiz.title("Notas v0.01")                   # Especifico el título de la ventana
