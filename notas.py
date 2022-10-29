@@ -127,6 +127,7 @@ def guardaNotas():
         for j in datos:
             existe = True
             print("La nota que intentas introducir existe")
+            cursor.execute("UPDATE notas SET texto = '"+i.texto+"', color = '"+i.color+"',posx = '"+str(i.posx)+"', posy = '"+str(i.posy)+"' WHERE fecha  = "+i.fecha+";")
         if existe == False:
             print("como no existe, meto la nota")
             cursor.execute("INSERT INTO notas VALUES(NULL,'"+i.texto+"','"+i.color+"','"+i.fecha+"','"+str(i.posx)+"','"+str(i.posy)+"');") # Inserto una a una las notas en la base de datos
