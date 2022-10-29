@@ -6,12 +6,14 @@ import time
 
 
 class Nota:                                                             # Declaramos una clase
-    def __init__(self,texto,color,fecha,posx,posy):                 # Método constructor
+    def __init__(self,texto,color,fecha,posx,posy,anchura,altura):                 # Método constructor
         self.texto = texto                                              # Propiedad texto
         self.color = color                                              # Propiedad color
         self.fecha = fecha                                              # Propiedad fecha
         self.posx = posx
         self.posy = posy
+        self.anchura = anchura
+        self.altura = altura
 
 # CONEXIÓN INICIAL CON LA BASE DE DATOS
 
@@ -26,6 +28,8 @@ cursor.execute("""
         'fecha' TEXT,
         'posx' TEXT,
         'posy' TEXT,
+        'anchura' TEXT,
+        'altura' TEXT,
         PRIMARY KEY('id' AUTOINCREMENT)
     );
 """)
@@ -103,8 +107,8 @@ def iniciaSesion():                         # Función de inicio de sesión
             for i in datos:
                 #print("Hay una nota en la base de datos")
                 #print(i)
-                cargaNota(i[1],i[2],i[3],i[4],i[5])
-                notas.append(Nota(i[1],i[2],i[3],i[4],i[5]))
+                cargaNota(i[1],i[2],i[3],i[4],i[5],i[6],i[7])
+                notas.append(Nota(i[1],i[2],i[3],i[4],i[5],i[6],i[7]))
                 #identificador = identificador + 1
             print("Voy a imprimir las notas que he cargado-------------------------------------------")
             for i in notas:                                                         # Para cada una de las notas
@@ -127,17 +131,17 @@ def guardaNotas():
         for j in datos:
             existe = True
             print("La nota que intentas introducir existe")
-            cursor.execute("UPDATE notas SET texto = '"+i.texto+"', color = '"+i.color+"',posx = '"+str(i.posx)+"', posy = '"+str(i.posy)+"' WHERE fecha  = "+i.fecha+";")
+            cursor.execute("UPDATE notas SET texto = '"+i.texto+"', color = '"+i.color+"',posx = '"+str(i.posx)+"', posy = '"+str(i.posy)+"',anchura = '"+str(i.anchura)+"', altura = '"+str(i.altura)+"' WHERE fecha  = "+i.fecha+";")
         if existe == False:
             print("como no existe, meto la nota")
-            cursor.execute("INSERT INTO notas VALUES(NULL,'"+i.texto+"','"+i.color+"','"+i.fecha+"','"+str(i.posx)+"','"+str(i.posy)+"');") # Inserto una a una las notas en la base de datos
+            cursor.execute("INSERT INTO notas VALUES(NULL,'"+i.texto+"','"+i.color+"','"+i.fecha+"','"+str(i.posx)+"','"+str(i.posy)+"','"+str(i.anchura)+"','"+str(i.altura)+"');") # Inserto una a una las notas en la base de datos
         conexion.commit()    
 def creaNota():
     global notas                            # Traigo la variable global notas
     global identificador                    # Traigo la variable global identificador
     fecha = str(int(time.time()))           # Saco la fecha actual
     
-    notas.append(Nota('','',fecha,'',''))   # Añado una nota a la lista
+    notas.append(Nota('','',fecha,'','','',''))   # Añado una nota a la lista
     
     
     for i in notas:                                                         # Para cada una de las notas
@@ -150,19 +154,22 @@ def creaNota():
     anchura = 300                           # Defino la anchura como un valor
     altura = 350                            # Defino la altura como otro valor
     ventananuevanota.geometry(str(anchura)+'x'+str(altura)+'+100+100')              # Geometria de la ventana y margen con la pantalla
-    texto = tk.Text(ventananuevanota,bg="white")
+    texto = tk.Text(ventananuevanota,bg="white",borderwidth=0,bd=0,)
     texto.pack()
     identificadorpropio = identificador
-    selectorcolor = ttk.Button(ventananuevanota,text="Cambiar color",command=lambda:cambiaColor(ventananuevanota,texto,identificadorpropio))
+    imagenselectorcolor = tk.PhotoImage(file = 'selectorcolor.png')
+    selectorcolor = ttk.Button(ventananuevanota,image=imagenselectorcolor,command=lambda:cambiaColor(ventananuevanota,texto,identificadorpropio))
+    selectorcolor.image = imagenselectorcolor
     selectorcolor.pack()
+    texto.bind('<Key>',lambda e:actualizaNota(ventananuevanota,texto,identificador))
     identificador = identificador + 1       # Subo el identificador
 
-def cargaNota(mitexto,color,fecha,posx,posy):
+def cargaNota(mitexto,color,fecha,posx,posy,anchura,altura):
     global notas                            # Traigo la variable global notas
     global identificador                    # Traigo la variable global identificador
     fecha = str(int(time.time()))           # Saco la fecha actual
     
-    #notas.append(Nota('','',fecha))   # Añado una nota a la lista
+    #notas.append(Nota('','',fecha))   # Añado una5 nota a la lista
     
     
     #for i in notas:                                                         # Para cada una de las notas
@@ -172,10 +179,10 @@ def cargaNota(mitexto,color,fecha,posx,posy):
         #print(i.fecha)                                                      # Imprimo su fecha
     
     ventananuevanota = tk.Toplevel()        # Nueva ventana flotante
-    anchura = 300                           # Defino la anchura como un valor
-    altura = 350                            # Defino la altura como otro valor
+    
     ventananuevanota.geometry(str(anchura)+'x'+str(altura)+'+'+posx+'+'+posy+'')              # Geometria de la ventana y margen con la pantalla
-    texto = tk.Text(ventananuevanota,bg="white")
+    texto = tk.Text(ventananuevanota,bg="white",borderwidth=0,bd=0)
+    texto.config(highlightthickness = 0, borderwidth=0)
     texto.insert("1.0",mitexto)
     texto.pack()
     ventananuevanota.configure(bg = color)   # Cambio el color de fondo a la ventana seleccionada
@@ -184,7 +191,9 @@ def cargaNota(mitexto,color,fecha,posx,posy):
     except Exception as e:
         print(e)
     identificadorpropio = identificador
-    selectorcolor = ttk.Button(ventananuevanota,text="Cambiar color",command=lambda:cambiaColor(ventananuevanota,texto,identificadorpropio))
+    imagenselectorcolor = tk.PhotoImage(file = 'selectorcolor.png')
+    selectorcolor = ttk.Button(ventananuevanota,image=imagenselectorcolor,command=lambda:cambiaColor(ventananuevanota,texto,identificadorpropio))
+    selectorcolor.image = imagenselectorcolor
     selectorcolor.pack()
     identificador = identificador + 1       # Subo el identificador
 
@@ -196,6 +205,8 @@ def cambiaColor(ventana,texto,identificador):                   # Creo la funcio
     notas[identificador].texto = texto.get("1.0",tk.END)
     notas[identificador].posx = ventana.winfo_x()
     notas[identificador].posy = ventana.winfo_y()
+    notas[identificador].anchura = ventana.winfo_width()
+    notas[identificador].altura = ventana.winfo_height()
     print("El identificador es:"+str(identificador))
     for i in notas:                                                         # Para cada una de las notas
        
@@ -203,7 +214,11 @@ def cambiaColor(ventana,texto,identificador):                   # Creo la funcio
         print(i.color)                                                      # Imprimo su color
         print(i.fecha)                                                      # Imprimo su fecha
         print(i.posx)
-        print(i.posy) 
+        print(i.posy)
+
+def actualizaNota(ventana,texto,identificador):
+    print("actualizo la nota")
+    #notas[identificador].texto = texto.get("1.0",tk.END)
 
 # CREACIÓN DE LA VENTANA PRINCIPAL Y ESTILO DE LA VENTANA #
 
