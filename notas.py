@@ -96,7 +96,7 @@ def creaNota():
     fecha = str(int(time.time()))           # Saco la fecha actual
     
     notas.append(Nota(identificador,'','',fecha))   # Añado una nota a la lista
-    identificador = identificador + 1       # Subo el identificador
+    
     
     for i in notas:                                                         # Para cada una de las notas
         print(i.identificador)                                                      # Imprimo su contenido
@@ -110,13 +110,22 @@ def creaNota():
     ventananuevanota.geometry(str(anchura)+'x'+str(altura)+'+100+100')              # Geometria de la ventana y margen con la pantalla
     texto = tk.Text(ventananuevanota,bg="white")
     texto.pack()
-    selectorcolor = ttk.Button(ventananuevanota,text="Cambiar color",command=lambda:cambiaColor(ventananuevanota,texto))
+    identificadorpropio = identificador
+    selectorcolor = ttk.Button(ventananuevanota,text="Cambiar color",command=lambda:cambiaColor(ventananuevanota,texto,identificadorpropio))
     selectorcolor.pack()
+    identificador = identificador + 1       # Subo el identificador
 
-def cambiaColor(ventana,texto):                   # Creo la funcion de cambio de color
+def cambiaColor(ventana,texto,identificador):                   # Creo la funcion de cambio de color
     nuevocolor = askcolor(title="Selecciona un color")  # Saco un selector de color
     ventana.configure(bg = nuevocolor[1])   # Cambio el color de fondo a la ventana seleccionada
     texto.configure(bg = nuevocolor[1])
+    notas[identificador].color = nuevocolor[1]
+    print("El identificador es:"+str(identificador))
+    for i in notas:                                                         # Para cada una de las notas
+        print(i.identificador)                                                      # Imprimo su contenido
+        print(i.texto)                                                      # Imprimo su contenido
+        print(i.color)                                                      # Imprimo su color
+        print(i.fecha)                                                      # Imprimo su fecha
 
 # CREACIÓN DE LA VENTANA PRINCIPAL Y ESTILO DE LA VENTANA #
 
