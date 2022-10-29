@@ -17,17 +17,17 @@ estilo.theme_use('classic')                 # Selecciono el estilo clásico de a
 version = tk.Label(raiz,text="Notas v0.01") # Creamos un label
 version.pack()                              # Lo añadimos a la ventana
 
-inputusuario = ttk.Entry(raiz)                # Creo una entrada para que el usuario diga quien es
-inputusuario.insert(0,'Introduce tu usuario')   # Creo  un texto de inicio en la entrada 
-inputusuario.pack()                           # Empaqueto la entrada
+inputusuario = ttk.Entry(raiz)              # Creo una entrada para que el usuario diga quien es
+inputusuario.insert(0,'Introduce tu usuario')# Creo  un texto de inicio en la entrada 
+inputusuario.pack(pady=10)                  # Empaqueto la entrada
 
-inputcontrasena = ttk.Entry(raiz)                # Creo una entrada para que el usuario diga quien es
+inputcontrasena = ttk.Entry(raiz)           # Creo una entrada para que el usuario diga quien es
 inputcontrasena.insert(0,'Introduce tu contraseña')   # Creo  un texto de inicio en la entrada 
-inputcontrasena.pack()                           # Empaqueto la entrada
+inputcontrasena.pack(pady=10)               # Empaqueto la entrada
 
 inputemail = ttk.Entry(raiz)                # Creo una entrada para que el usuario diga quien es
 inputemail.insert(0,'Introduce tu email')   # Creo  un texto de inicio en la entrada 
-inputemail.pack()                           # Empaqueto la entrada
+inputemail.pack(pady=10)                    # Empaqueto la entrada
 
 # INTENTO INTRODUCIR ANTIALIAS EN WINDOWS Y LANZO EL BUCLE
 
