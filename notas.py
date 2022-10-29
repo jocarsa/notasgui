@@ -1,6 +1,12 @@
 import tkinter as tk                        # Importo la librería de GUI
 from tkinter import ttk                     # Importo la nueva librería TTK
 
+# DECLARO VARIABLES GLOBALES DEL PROGRAMA
+
+varUsuario = tk.StringVar()                 # Variable para almacenar el usuario
+varContrasena = tk.StringVar()              # Variable para almacenar la contraseña
+varEmail = tk.StringVar()                   # Variable para almacenar el email
+
 # DECLARO FUNCIONES PARA EL PROGRAMA
 
 def iniciaSesion():                         # Función de inicio de sesión
