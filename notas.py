@@ -120,6 +120,7 @@ def cambiaColor(ventana,texto,identificador):                   # Creo la funcio
     ventana.configure(bg = nuevocolor[1])   # Cambio el color de fondo a la ventana seleccionada
     texto.configure(bg = nuevocolor[1])
     notas[identificador].color = nuevocolor[1]
+    notas[identificador].texto = texto.get("1.0",tk.END)
     print("El identificador es:"+str(identificador))
     for i in notas:                                                         # Para cada una de las notas
         print(i.identificador)                                                      # Imprimo su contenido
