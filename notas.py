@@ -47,6 +47,23 @@ def iniciaSesion():                         # Función de inicio de sesión
         conexion.commit()                   # Ejecuto la inserción
     else:                                   # En el caso de que haya usuarios
         print("sí que existe un usuario en la base de datos")
+        cursor.execute('''
+            SELECT *
+            FROM usuarios
+            WHERE usuario = "'''+varusuario.get()+'''"
+            AND contrasena = "'''+varcontrasena.get()+'''"
+            AND email = "'''+varemail.get()+'''"
+            ''')                            # Realizo una consulta a la base de datos
+        existe = False
+        datos = cursor.fetchall()           # Cargo los datos
+        for i in datos:                         # Para cada uno de los registros devueltos
+            existe = True                   # Actualizo el valor
+        if existe == True:                  # en el caso de que exista        
+            print("el usuario que has introducido es correcto")
+        else:                               # en el caso de que no exista
+            print("el usuario no es correcto")
+            raiz.after(3000,lambda:raiz.destroy())  # Cierro la ventana despues de 3 segundos
+        
 
 # CREACIÓN DE LA VENTANA PRINCIPAL Y ESTILO DE LA VENTANA #
 
