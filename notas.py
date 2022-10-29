@@ -2,6 +2,15 @@ import tkinter as tk                        # Importo la librería de GUI
 from tkinter import ttk                     # Importo la nueva librería TTK
 import sqlite3 as bd                                                    # Importo la librería SQLiteimport sqlite3 as bd
 from tkinter.colorchooser import askcolor # Importo el selector de color
+import time
+
+
+class Nota:                                                             # Declaramos una clase
+    def __init__(self,identificador,texto,color,fecha):                 # Método constructor
+        self.identificador = identificador
+        self.texto = texto                                              # Propiedad texto
+        self.color = color                                              # Propiedad color
+        self.fecha = fecha                                              # Propiedad fecha
 
 # CONEXIÓN INICIAL CON LA BASE DE DATOS
 
@@ -82,6 +91,19 @@ def iniciaSesion():                         # Función de inicio de sesión
             print("el usuario no es correcto")
             raiz.after(3000,lambda:raiz.destroy())  # Cierro la ventana despues de 3 segundos
 def creaNota():
+    global notas                            # Traigo la variable global notas
+    global identificador                    # Traigo la variable global identificador
+    fecha = str(int(time.time()))           # Saco la fecha actual
+    
+    notas.append(Nota(identificador,'','',fecha))   # Añado una nota a la lista
+    identificador = identificador + 1       # Subo el identificador
+    
+    for i in notas:                                                         # Para cada una de las notas
+        print(i.identificador)                                                      # Imprimo su contenido
+        print(i.texto)                                                      # Imprimo su contenido
+        print(i.color)                                                      # Imprimo su color
+        print(i.fecha)                                                      # Imprimo su fecha
+    
     ventananuevanota = tk.Toplevel()        # Nueva ventana flotante
     anchura = 300                           # Defino la anchura como un valor
     altura = 350                            # Defino la altura como otro valor
@@ -112,6 +134,8 @@ estilo.theme_use('default')                 # Selecciono el estilo clásico de a
 varusuario = tk.StringVar()                 # Variable para almacenar el usuario
 varcontrasena = tk.StringVar()              # Variable para almacenar la contraseña
 varemail = tk.StringVar()                   # Variable para almacenar el email
+notas = []                                                              # Creo una lista vacía
+identificador = 0                           # Inicializo un identificador
 
 
 # AÑADIMOS WIDGETS A LA VENTANA
