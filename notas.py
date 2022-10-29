@@ -88,12 +88,13 @@ def creaNota():
     ventananuevanota.geometry(str(anchura)+'x'+str(altura)+'+100+100')              # Geometria de la ventana y margen con la pantalla
     texto = tk.Text(ventananuevanota,bg="white")
     texto.pack()
-    selectorcolor = ttk.Button(ventananuevanota,text="Cambiar color",command=lambda:cambiaColor(ventananuevanota))
+    selectorcolor = ttk.Button(ventananuevanota,text="Cambiar color",command=lambda:cambiaColor(ventananuevanota,texto))
     selectorcolor.pack()
 
-def cambiaColor(ventana):                   # Creo la funcion de cambio de color
+def cambiaColor(ventana,texto):                   # Creo la funcion de cambio de color
     nuevocolor = askcolor(title="Selecciona un color")  # Saco un selector de color
     ventana.configure(bg = nuevocolor[1])   # Cambio el color de fondo a la ventana seleccionada
+    texto.configure(bg = nuevocolor[1])
 
 # CREACIÓN DE LA VENTANA PRINCIPAL Y ESTILO DE LA VENTANA #
 
