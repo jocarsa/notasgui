@@ -1,12 +1,18 @@
 import tkinter as tk                        # Importo la librería de GUI
 from tkinter import ttk                     # Importo la nueva librería TTK
 
+# CREACIÓN DE LA VENTANA PRINCIPAL Y ESTILO DE LA VENTANA #
+
 raiz = tk.Tk()                              # Creo una interfaz gráfica de usuario
 raiz.title("Notas v0.01")                   # Especifico el título de la ventana
 raiz.geometry('200x200+20+50')              # Geomtria de la ventana y margen con la pantalla
 raiz.attributes("-topmost",True)            # Siempre encima del resto de las ventanas
 raiz.attributes("-alpha",0.9)               # Añado  un efecto de transparencia
 raiz.resizable(0,0)                         # Impido que el usuario pueda redimensionar la ventana
+estilo = ttk.Style()                        # Añado soporte para estilos
+estilo.theme_use('classic')                 # Selecciono el estilo clásico de aplicaciones
+
+# INTENTO INTRODUCIR ANTIALIAS EN WINDOWS Y LANZO EL BUCLE
 
 try:                                        # Intento ejecutar
     from ctypes import windll               # Importo la libreria específica de GUI de Windows
