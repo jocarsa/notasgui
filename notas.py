@@ -22,7 +22,7 @@ class Nota:                                                             # Declar
 
 # CONEXIÓN INICIAL CON LA BASE DE DATOS
 
-conexion = bd.connect("notas.sqlite")                                   # Indico el nombre de la base de datos
+conexion = bd.connect("resources/notas.sqlite")                                   # Indico el nombre de la base de datos
 cursor = conexion.cursor()                                              # Creo un cursor
 # Sobre el cursor, ejecuto una petición para crear una tabla en la base de datos en el caso de que no exista anteriormente
 cursor.execute("""
@@ -92,7 +92,7 @@ def iniciaSesion():                         # Función de inicio de sesión
             marco2 = ttk.Frame(raiz)        # Creo un nuevo marco
             marco2.pack()                   # Empaqueto el marco
                                                     
-            iconoaplicacion = tk.PhotoImage(file="icono.png")   # Cargo una  imagen
+            iconoaplicacion = tk.PhotoImage(file="resources/icono.png")   # Cargo una  imagen
             etiquetaicono = ttk.Label(
                 marco2,
                 text="Notas v"+str(numeroversion),
@@ -173,12 +173,12 @@ def creaNota():
     
                  # Geometria de la ventana y margen con la pantalla
     identificadorpropio = identificador
-    imagenselectorcolor = tk.PhotoImage(file = 'selectorcolor.png')
+    imagenselectorcolor = tk.PhotoImage(file = 'resources/selectorcolor.png')
     selectorcolor = ttk.Button(marcobotones,image=imagenselectorcolor,command=lambda:cambiaColor(ventananuevanota,texto,identificadorpropio))
     selectorcolor.image = imagenselectorcolor
     selectorcolor.pack(side = tk.LEFT)
 
-    imagenguardanota = tk.PhotoImage(file = 'guardar.png')
+    imagenguardanota = tk.PhotoImage(file = 'resources/guardar.png')
     botonguardar = ttk.Button(marcobotones,image=imagenguardanota,command=lambda:guardaNota(ventananuevanota,texto,identificadorpropio))
     botonguardar.image = imagenguardanota
     botonguardar.pack(side = tk.LEFT)
@@ -228,12 +228,12 @@ def cargaNota(mitexto,color,fecha,posx,posy,anchura,altura,fuente,tamanio):
     
     ventananuevanota.geometry(str(anchura)+'x'+str(altura)+'+'+posx+'+'+posy+'')              # Geometria de la ventana y margen con la pantalla
     identificadorpropio = identificador
-    imagenselectorcolor = tk.PhotoImage(file = 'selectorcolor.png')
+    imagenselectorcolor = tk.PhotoImage(file = 'resources/selectorcolor.png')
     selectorcolor = ttk.Button(marcobotones,image=imagenselectorcolor,command=lambda:cambiaColor(ventananuevanota,texto,identificadorpropio))
     selectorcolor.image = imagenselectorcolor
     selectorcolor.pack(side = tk.LEFT)
 
-    imagenguardanota = tk.PhotoImage(file = 'guardar.png')
+    imagenguardanota = tk.PhotoImage(file = 'resources/guardar.png')
     botonguardar = ttk.Button(marcobotones,image=imagenguardanota,command=lambda:guardaNota(ventananuevanota,texto,identificadorpropio))
     botonguardar.image = imagenguardanota
     botonguardar.pack(side = tk.LEFT)
