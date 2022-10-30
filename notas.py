@@ -3,6 +3,7 @@ from tkinter import ttk                     # Importo la nueva librería TTK
 import sqlite3 as bd                                                    # Importo la librería SQLiteimport sqlite3 as bd
 from tkinter.colorchooser import askcolor # Importo el selector de color
 import time
+from tkinter import messagebox
 
 
 class Nota:                                                             # Declaramos una clase
@@ -220,6 +221,27 @@ def actualizaNota(ventana,texto,identificador):
     print("actualizo la nota")
     #notas[identificador].texto = texto.get("1.0",tk.END)
 
+
+    
+
+def guardaNotasSalir():
+    for i in notas:                                                         # Para cada una de las notas
+        print(i.texto)                                                      # Imprimo su contenido
+        print(i.color)                                                      # Imprimo su color
+        print(i.fecha)                                                      # Imprimo su fecha
+        existe = False
+        cursor.execute('SELECT * FROM NOTAS WHERE fecha = "'+i.fecha+'"')
+        datos = cursor.fetchall()
+        for j in datos:
+            existe = True
+            print("La nota que intentas introducir existe")
+            cursor.execute("UPDATE notas SET texto = '"+i.texto+"', color = '"+i.color+"',posx = '"+str(i.posx)+"', posy = '"+str(i.posy)+"',anchura = '"+str(i.anchura)+"', altura = '"+str(i.altura)+"' WHERE fecha  = "+i.fecha+";")
+        if existe == False:
+            print("como no existe, meto la nota")
+            cursor.execute("INSERT INTO notas VALUES(NULL,'"+i.texto+"','"+i.color+"','"+i.fecha+"','"+str(i.posx)+"','"+str(i.posy)+"','"+str(i.anchura)+"','"+str(i.altura)+"');") # Inserto una a una las notas en la base de datos
+        conexion.commit()
+        raiz.after(3000,lambda:raiz.destroy())
+
 # CREACIÓN DE LA VENTANA PRINCIPAL Y ESTILO DE LA VENTANA #
 
 raiz = tk.Tk()                              # Creo una interfaz gráfica de usuario
@@ -230,7 +252,7 @@ raiz.attributes("-alpha",0.9)               # Añado  un efecto de transparencia
 raiz.resizable(0,0)                         # Impido que el usuario pueda redimensionar la ventana
 estilo = ttk.Style()                        # Añado soporte para estilos
 estilo.theme_use('default')                 # Selecciono el estilo clásico de aplicaciones
-raiz.protocol("WM_DELETE_WINDOW", guardaNotas) # Cuando cierres la ventana, guarda las notas
+raiz.protocol("WM_DELETE_WINDOW", guardaNotasSalir) # Cuando cierres la ventana, guarda las notas
 
 # DECLARO VARIABLES GLOBALES DEL PROGRAMA
 
