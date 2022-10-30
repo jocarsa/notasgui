@@ -201,6 +201,9 @@ def cargaNota(mitexto,color,fecha,posx,posy,anchura,altura):
 
     listafuentes = ttk.Combobox(marcobotones,values = fuentesdelsistema)
     listafuentes.pack(side = tk.LEFT)
+
+    listatamanios = ttk.Combobox(marcobotones,values = tamaniofuentes)
+    listatamanios.pack(side = tk.LEFT)
     
     marcotexto = ttk.Frame(ventananuevanota)
     marcotexto.pack()
@@ -297,7 +300,7 @@ varcontrasena = tk.StringVar()              # Variable para almacenar la contras
 varemail = tk.StringVar()                   # Variable para almacenar el email
 notas = []                                                              # Creo una lista vacía
 identificador = 0                           # Inicializo un identificador
-
+tamaniofuentes = [8,10,12,14,16,18,20,22,24,26,28,30]
 
 # AÑADIMOS WIDGETS A LA VENTANA
 
