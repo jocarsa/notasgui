@@ -181,14 +181,26 @@ def cargaNota(mitexto,color,fecha,posx,posy,anchura,altura):
         #print(i.fecha)                                                      # Imprimo su fecha
     
     ventananuevanota = tk.Toplevel()        # Nueva ventana flotante
+
+    marcobotones = ttk.Frame(ventananuevanota)
+    marcobotones.pack() 
     
     ventananuevanota.geometry(str(anchura)+'x'+str(altura)+'+'+posx+'+'+posy+'')              # Geometria de la ventana y margen con la pantalla
     identificadorpropio = identificador
     imagenselectorcolor = tk.PhotoImage(file = 'selectorcolor.png')
-    selectorcolor = ttk.Button(ventananuevanota,image=imagenselectorcolor,command=lambda:cambiaColor(ventananuevanota,texto,identificadorpropio))
+    selectorcolor = ttk.Button(marcobotones,image=imagenselectorcolor,command=lambda:cambiaColor(ventananuevanota,texto,identificadorpropio))
     selectorcolor.image = imagenselectorcolor
-    selectorcolor.pack()
-    texto = tk.Text(ventananuevanota,bg="white",borderwidth=0,bd=0)
+    selectorcolor.pack(side = tk.LEFT)
+
+    imagenguardanota = tk.PhotoImage(file = 'guardar.png')
+    botonguardar = ttk.Button(marcobotones,image=imagenguardanota,command=lambda:cambiaColor(ventananuevanota,texto,identificadorpropio))
+    botonguardar.image = imagenguardanota
+    botonguardar.pack(side = tk.LEFT)
+    
+    marcotexto = ttk.Frame(ventananuevanota)
+    marcotexto.pack()
+    
+    texto = tk.Text(marcotexto,bg="white",borderwidth=0,bd=0)
     texto.config(highlightthickness = 0, borderwidth=0)
     texto.insert("1.0",mitexto)
     texto.pack()
