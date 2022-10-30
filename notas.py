@@ -9,7 +9,7 @@ from tkinter import font
 
 
 class Nota:                                                             # Declaramos una clase
-    def __init__(self,texto,color,fecha,posx,posy,anchura,altura):                 # Método constructor
+    def __init__(self,texto,color,fecha,posx,posy,anchura,altura,fuente,tamanio):                 # Método constructor
         self.texto = texto                                              # Propiedad texto
         self.color = color                                              # Propiedad color
         self.fecha = fecha                                              # Propiedad fecha
@@ -17,6 +17,8 @@ class Nota:                                                             # Declar
         self.posy = posy
         self.anchura = anchura
         self.altura = altura
+        self.fuente = fuente
+        self.tamanio = tamanio
 
 # CONEXIÓN INICIAL CON LA BASE DE DATOS
 
@@ -33,6 +35,8 @@ cursor.execute("""
         'posy' TEXT,
         'anchura' TEXT,
         'altura' TEXT,
+        'fuente' TEXT,
+        'tamanio' TEXT,
         PRIMARY KEY('id' AUTOINCREMENT)
     );
 """)
@@ -110,8 +114,8 @@ def iniciaSesion():                         # Función de inicio de sesión
             for i in datos:
                 #print("Hay una nota en la base de datos")
                 #print(i)
-                cargaNota(i[1],i[2],i[3],i[4],i[5],i[6],i[7])
-                notas.append(Nota(i[1],i[2],i[3],i[4],i[5],i[6],i[7]))
+                cargaNota(i[1],i[2],i[3],i[4],i[5],i[6],i[7],i[8],i[9])
+                notas.append(Nota(i[1],i[2],i[3],i[4],i[5],i[6],i[7],i[8],i[9]))
                 #identificador = identificador + 1
             print("Voy a imprimir las notas que he cargado-------------------------------------------")
             for i in notas:                                                         # Para cada una de las notas
@@ -134,17 +138,17 @@ def guardaNotas():
         for j in datos:
             existe = True
             print("La nota que intentas introducir existe")
-            cursor.execute("UPDATE notas SET texto = '"+i.texto+"', color = '"+i.color+"',posx = '"+str(i.posx)+"', posy = '"+str(i.posy)+"',anchura = '"+str(i.anchura)+"', altura = '"+str(i.altura)+"' WHERE fecha  = "+i.fecha+";")
+            cursor.execute("UPDATE notas SET texto = '"+i.texto+"', color = '"+i.color+"',posx = '"+str(i.posx)+"', posy = '"+str(i.posy)+"',anchura = '"+str(i.anchura)+"', altura = '"+str(i.altura)+"', fuente = '"+str(i.fuente)+"', tamanio = '"+str(i.tamanio)+"' WHERE fecha  = "+i.fecha+";")
         if existe == False:
             print("como no existe, meto la nota")
-            cursor.execute("INSERT INTO notas VALUES(NULL,'"+i.texto+"','"+i.color+"','"+i.fecha+"','"+str(i.posx)+"','"+str(i.posy)+"','"+str(i.anchura)+"','"+str(i.altura)+"');") # Inserto una a una las notas en la base de datos
+            cursor.execute("INSERT INTO notas VALUES(NULL,'"+i.texto+"','"+i.color+"','"+i.fecha+"','"+str(i.posx)+"','"+str(i.posy)+"','"+str(i.anchura)+"','"+str(i.altura)+"','"+str(i.fuente)+"','"+str(i.tamanio)+"');") # Inserto una a una las notas en la base de datos
         conexion.commit()    
 def creaNota():
     global notas                            # Traigo la variable global notas
     global identificador                    # Traigo la variable global identificador
     fecha = str(int(time.time()))           # Saco la fecha actual
     
-    notas.append(Nota('','',fecha,'','','',''))   # Añado una nota a la lista
+    notas.append(Nota('','',fecha,'','','','','',''))   # Añado una nota a la lista
     
     
     for i in notas:                                                         # Para cada una de las notas
@@ -158,17 +162,52 @@ def creaNota():
     altura = 350                            # Defino la altura como otro valor
     ventananuevanota.geometry(str(anchura)+'x'+str(altura)+'+100+100')              # Geometria de la ventana y margen con la pantalla
     identificadorpropio = identificador
+##    imagenselectorcolor = tk.PhotoImage(file = 'selectorcolor.png')
+##    selectorcolor = ttk.Button(ventananuevanota,image=imagenselectorcolor,command=lambda:cambiaColor(ventananuevanota,texto,identificadorpropio))
+##    selectorcolor.image = imagenselectorcolor
+##    selectorcolor.pack()
+##    texto = tk.Text(ventananuevanota,bg="white",borderwidth=0,bd=0,)
+##    texto.pack()
+    marcobotones = ttk.Frame(ventananuevanota)
+    marcobotones.pack() 
+    
+                 # Geometria de la ventana y margen con la pantalla
+    identificadorpropio = identificador
     imagenselectorcolor = tk.PhotoImage(file = 'selectorcolor.png')
-    selectorcolor = ttk.Button(ventananuevanota,image=imagenselectorcolor,command=lambda:cambiaColor(ventananuevanota,texto,identificadorpropio))
+    selectorcolor = ttk.Button(marcobotones,image=imagenselectorcolor,command=lambda:cambiaColor(ventananuevanota,texto,identificadorpropio))
     selectorcolor.image = imagenselectorcolor
-    selectorcolor.pack()
-    texto = tk.Text(ventananuevanota,bg="white",borderwidth=0,bd=0,)
+    selectorcolor.pack(side = tk.LEFT)
+
+    imagenguardanota = tk.PhotoImage(file = 'guardar.png')
+    botonguardar = ttk.Button(marcobotones,image=imagenguardanota,command=lambda:guardaNota(ventananuevanota,texto,identificadorpropio))
+    botonguardar.image = imagenguardanota
+    botonguardar.pack(side = tk.LEFT)
+
+    listafuentes = ttk.Combobox(marcobotones,values = fuentesdelsistema)
+    listafuentes.pack(side = tk.LEFT)
+
+    listatamanios = ttk.Combobox(marcobotones,values = tamaniofuentes,textvariable=tamaniotexto)
+    listatamanios.pack(side = tk.LEFT)
+    listatamanios.bind("<<ComboboxSelected>>", lambda event :cambiaTamanioFuente(event,ventana = ventananuevanota,mitexto = texto))
+    
+    marcotexto = ttk.Frame(ventananuevanota)
+    marcotexto.pack()
+    
+    texto = tk.Text(marcotexto,bg="white",borderwidth=0,bd=0)
+    texto.config(highlightthickness = 0, borderwidth=0)
+    
     texto.pack()
+       # Cambio el color de fondo a la ventana seleccionada
+    try:
+        texto.configure(bg = color)
+    except Exception as e:
+        print(e)
+    ventananuevanota.protocol("WM_DELETE_WINDOW", lambda:borraNota(identificadorpropio,ventananuevanota)) # Cuando cierres la ventana, guarda las notas
     
     texto.bind('<Key>',lambda e:actualizaNota(ventananuevanota,texto,identificador))
     identificador = identificador + 1       # Subo el identificador
 
-def cargaNota(mitexto,color,fecha,posx,posy,anchura,altura):
+def cargaNota(mitexto,color,fecha,posx,posy,anchura,altura,fuente,tamanio):
     global notas                            # Traigo la variable global notas
     global identificador                    # Traigo la variable global identificador
     fecha = str(int(time.time()))           # Saco la fecha actual
@@ -202,23 +241,35 @@ def cargaNota(mitexto,color,fecha,posx,posy,anchura,altura):
     listafuentes = ttk.Combobox(marcobotones,values = fuentesdelsistema)
     listafuentes.pack(side = tk.LEFT)
 
-    listatamanios = ttk.Combobox(marcobotones,values = tamaniofuentes)
+    listatamanios = ttk.Combobox(marcobotones,values = tamaniofuentes,textvariable=tamaniotexto)
     listatamanios.pack(side = tk.LEFT)
+
+    listatamanios.bind("<<ComboboxSelected>>", lambda event :cambiaTamanioFuente(event,ventana = ventananuevanota,mitexto = texto,identificador=identificadorpropio))
     
     marcotexto = ttk.Frame(ventananuevanota)
     marcotexto.pack()
     
     texto = tk.Text(marcotexto,bg="white",borderwidth=0,bd=0)
     texto.config(highlightthickness = 0, borderwidth=0)
+    Font_tuple = ("Comic Sans MS", tamanio, "bold")
+    texto.configure(font = Font_tuple)
     texto.insert("1.0",mitexto)
     texto.pack()
     ventananuevanota.configure(bg = color)   # Cambio el color de fondo a la ventana seleccionada
+    
     try:
         texto.configure(bg = color)
     except Exception as e:
         print(e)
     ventananuevanota.protocol("WM_DELETE_WINDOW", lambda:borraNota(identificadorpropio,ventananuevanota)) # Cuando cierres la ventana, guarda las notas
     identificador = identificador + 1       # Subo el identificador
+
+def cambiaTamanioFuente(event,ventana,mitexto,identificador):
+    print("cambio el tamaño de la fuente")
+    Font_tuple = ("Comic Sans MS", tamaniotexto.get(), "bold")
+    mitexto.configure(font = Font_tuple)
+    notas[identificador].tamanio = tamaniotexto.get()
+    
 
 def borraNota(identificadorpropio,ventana):
     print("voy a borrar el elemento que tiene en id:"+str(identificadorpropio))
@@ -271,10 +322,10 @@ def guardaNotasSalir():
         for j in datos:
             existe = True
             print("La nota que intentas introducir existe")
-            cursor.execute("UPDATE notas SET texto = '"+i.texto+"', color = '"+i.color+"',posx = '"+str(i.posx)+"', posy = '"+str(i.posy)+"',anchura = '"+str(i.anchura)+"', altura = '"+str(i.altura)+"' WHERE fecha  = "+i.fecha+";")
+            cursor.execute("UPDATE notas SET texto = '"+i.texto+"', color = '"+i.color+"',posx = '"+str(i.posx)+"', posy = '"+str(i.posy)+"',anchura = '"+str(i.anchura)+"', altura = '"+str(i.altura)+"', fuente = '"+str(i.fuente)+"', tamanio = '"+str(i.tamanio)+"' WHERE fecha  = "+i.fecha+";")
         if existe == False:
             print("como no existe, meto la nota")
-            cursor.execute("INSERT INTO notas VALUES(NULL,'"+i.texto+"','"+i.color+"','"+i.fecha+"','"+str(i.posx)+"','"+str(i.posy)+"','"+str(i.anchura)+"','"+str(i.altura)+"');") # Inserto una a una las notas en la base de datos
+            cursor.execute("INSERT INTO notas VALUES(NULL,'"+i.texto+"','"+i.color+"','"+i.fecha+"','"+str(i.posx)+"','"+str(i.posy)+"','"+str(i.anchura)+"','"+str(i.altura)+"','"+str(i.fuente)+"','"+str(i.tamanio)+"');") # Inserto una a una las notas en la base de datos
         conexion.commit()
         raiz.after(3000,lambda:raiz.destroy())
 
@@ -301,6 +352,7 @@ varemail = tk.StringVar()                   # Variable para almacenar el email
 notas = []                                                              # Creo una lista vacía
 identificador = 0                           # Inicializo un identificador
 tamaniofuentes = [8,10,12,14,16,18,20,22,24,26,28,30]
+tamaniotexto = tk.StringVar()
 
 # AÑADIMOS WIDGETS A LA VENTANA
 
