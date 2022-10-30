@@ -193,7 +193,7 @@ def cargaNota(mitexto,color,fecha,posx,posy,anchura,altura):
     selectorcolor.pack(side = tk.LEFT)
 
     imagenguardanota = tk.PhotoImage(file = 'guardar.png')
-    botonguardar = ttk.Button(marcobotones,image=imagenguardanota,command=lambda:cambiaColor(ventananuevanota,texto,identificadorpropio))
+    botonguardar = ttk.Button(marcobotones,image=imagenguardanota,command=lambda:guardaNota(ventananuevanota,texto,identificadorpropio))
     botonguardar.image = imagenguardanota
     botonguardar.pack(side = tk.LEFT)
     
@@ -235,7 +235,12 @@ def actualizaNota(ventana,texto,identificador):
     print("actualizo la nota")
     #notas[identificador].texto = texto.get("1.0",tk.END)
 
-
+def guardaNota(ventana,texto,identificador):
+    notas[identificador].texto = texto.get("1.0",tk.END)
+    notas[identificador].posx = ventana.winfo_x()
+    notas[identificador].posy = ventana.winfo_y()
+    notas[identificador].anchura = ventana.winfo_width()
+    notas[identificador].altura = ventana.winfo_height()
     
 
 def guardaNotasSalir():
