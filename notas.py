@@ -6,7 +6,7 @@ import time
 from tkinter import messagebox
 from tkinter import font
 
-numeroversion = "1.0"
+numeroversion = "1.2"
 
 class Nota:                                                             # Declaramos una clase
     def __init__(self,texto,color,fecha,posx,posy,anchura,altura,fuente,tamanio):                 # Método constructor
