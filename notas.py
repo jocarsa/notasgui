@@ -155,13 +155,14 @@ def creaNota():
     anchura = 300                           # Defino la anchura como un valor
     altura = 350                            # Defino la altura como otro valor
     ventananuevanota.geometry(str(anchura)+'x'+str(altura)+'+100+100')              # Geometria de la ventana y margen con la pantalla
-    texto = tk.Text(ventananuevanota,bg="white",borderwidth=0,bd=0,)
-    texto.pack()
     identificadorpropio = identificador
     imagenselectorcolor = tk.PhotoImage(file = 'selectorcolor.png')
     selectorcolor = ttk.Button(ventananuevanota,image=imagenselectorcolor,command=lambda:cambiaColor(ventananuevanota,texto,identificadorpropio))
     selectorcolor.image = imagenselectorcolor
     selectorcolor.pack()
+    texto = tk.Text(ventananuevanota,bg="white",borderwidth=0,bd=0,)
+    texto.pack()
+    
     texto.bind('<Key>',lambda e:actualizaNota(ventananuevanota,texto,identificador))
     identificador = identificador + 1       # Subo el identificador
 
@@ -182,6 +183,11 @@ def cargaNota(mitexto,color,fecha,posx,posy,anchura,altura):
     ventananuevanota = tk.Toplevel()        # Nueva ventana flotante
     
     ventananuevanota.geometry(str(anchura)+'x'+str(altura)+'+'+posx+'+'+posy+'')              # Geometria de la ventana y margen con la pantalla
+    identificadorpropio = identificador
+    imagenselectorcolor = tk.PhotoImage(file = 'selectorcolor.png')
+    selectorcolor = ttk.Button(ventananuevanota,image=imagenselectorcolor,command=lambda:cambiaColor(ventananuevanota,texto,identificadorpropio))
+    selectorcolor.image = imagenselectorcolor
+    selectorcolor.pack()
     texto = tk.Text(ventananuevanota,bg="white",borderwidth=0,bd=0)
     texto.config(highlightthickness = 0, borderwidth=0)
     texto.insert("1.0",mitexto)
@@ -191,11 +197,7 @@ def cargaNota(mitexto,color,fecha,posx,posy,anchura,altura):
         texto.configure(bg = color)
     except Exception as e:
         print(e)
-    identificadorpropio = identificador
-    imagenselectorcolor = tk.PhotoImage(file = 'selectorcolor.png')
-    selectorcolor = ttk.Button(ventananuevanota,image=imagenselectorcolor,command=lambda:cambiaColor(ventananuevanota,texto,identificadorpropio))
-    selectorcolor.image = imagenselectorcolor
-    selectorcolor.pack()
+    
     identificador = identificador + 1       # Subo el identificador
 
 def cambiaColor(ventana,texto,identificador):                   # Creo la funcion de cambio de color
