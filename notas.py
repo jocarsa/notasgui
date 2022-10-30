@@ -209,8 +209,17 @@ def cargaNota(mitexto,color,fecha,posx,posy,anchura,altura):
         texto.configure(bg = color)
     except Exception as e:
         print(e)
-    
+    ventananuevanota.protocol("WM_DELETE_WINDOW", lambda:borraNota(identificadorpropio,ventananuevanota)) # Cuando cierres la ventana, guarda las notas
     identificador = identificador + 1       # Subo el identificador
+
+def borraNota(identificadorpropio,ventana):
+    print("voy a borrar el elemento que tiene en id:"+str(identificadorpropio))
+    ventana.after(1000,lambda:ventana.destroy())
+    fechanota = notas[identificadorpropio].fecha
+    notas.remove(notas[identificadorpropio])
+    print("La fecha de la nota es: "+str(fechanota))
+    cursor.execute("DELETE FROM notas WHERE fecha = '"+str(fechanota)+"';") # Inserto el usuario en la base de datos
+    conexion.commit()                   # Ejecuto la inserción
 
 def cambiaColor(ventana,texto,identificador):                   # Creo la funcion de cambio de color
     nuevocolor = askcolor(title="Selecciona un color")  # Saco un selector de color
