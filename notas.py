@@ -4,6 +4,8 @@ import sqlite3 as bd                                                    # Import
 from tkinter.colorchooser import askcolor # Importo el selector de color
 import time
 from tkinter import messagebox
+from tkinter import font
+
 
 
 class Nota:                                                             # Declaramos una clase
@@ -196,6 +198,9 @@ def cargaNota(mitexto,color,fecha,posx,posy,anchura,altura):
     botonguardar = ttk.Button(marcobotones,image=imagenguardanota,command=lambda:guardaNota(ventananuevanota,texto,identificadorpropio))
     botonguardar.image = imagenguardanota
     botonguardar.pack(side = tk.LEFT)
+
+    listafuentes = ttk.Combobox(marcobotones,values = fuentesdelsistema)
+    listafuentes.pack(side = tk.LEFT)
     
     marcotexto = ttk.Frame(ventananuevanota)
     marcotexto.pack()
@@ -281,6 +286,9 @@ raiz.resizable(0,0)                         # Impido que el usuario pueda redime
 estilo = ttk.Style()                        # Añado soporte para estilos
 estilo.theme_use('default')                 # Selecciono el estilo clásico de aplicaciones
 raiz.protocol("WM_DELETE_WINDOW", guardaNotasSalir) # Cuando cierres la ventana, guarda las notas
+
+fuentesdelsistema = font.families()
+listafuentestk = tk.StringVar(value = fuentesdelsistema)
 
 # DECLARO VARIABLES GLOBALES DEL PROGRAMA
 
