@@ -6,7 +6,7 @@ import time
 from tkinter import messagebox
 from tkinter import font
 
-
+numeroversion = "1.0"
 
 class Nota:                                                             # Declaramos una clase
     def __init__(self,texto,color,fecha,posx,posy,anchura,altura,fuente,tamanio):                 # Método constructor
@@ -95,7 +95,7 @@ def iniciaSesion():                         # Función de inicio de sesión
             iconoaplicacion = tk.PhotoImage(file="icono.png")   # Cargo una  imagen
             etiquetaicono = ttk.Label(
                 marco2,
-                text="Notas v0.01",
+                text="Notas v"+str(numeroversion),
                 image = iconoaplicacion,
                 compound=tk.TOP,
                 font=("Arial",14)
@@ -188,7 +188,7 @@ def creaNota():
 
     listatamanios = ttk.Combobox(marcobotones,values = tamaniofuentes,textvariable=tamaniotexto)
     listatamanios.pack(side = tk.LEFT)
-    listatamanios.bind("<<ComboboxSelected>>", lambda event :cambiaTamanioFuente(event,ventana = ventananuevanota,mitexto = texto))
+    listatamanios.bind("<<ComboboxSelected>>", lambda event :cambiaTamanioFuente(event,ventana = ventananuevanota,mitexto = texto,identificador=identificadorpropio))
     
     marcotexto = ttk.Frame(ventananuevanota)
     marcotexto.pack()
@@ -332,7 +332,7 @@ def guardaNotasSalir():
 # CREACIÓN DE LA VENTANA PRINCIPAL Y ESTILO DE LA VENTANA #
 
 raiz = tk.Tk()                              # Creo una interfaz gráfica de usuario
-raiz.title("Notas v0.01")                   # Especifico el título de la ventana
+raiz.title("Notas v"+numeroversion)                   # Especifico el título de la ventana
 raiz.geometry('200x200+20+50')              # Geomtria de la ventana y margen con la pantalla
 raiz.attributes("-topmost",True)            # Siempre encima del resto de las ventanas
 raiz.attributes("-alpha",0.9)               # Añado  un efecto de transparencia
@@ -359,7 +359,7 @@ tamaniotexto = tk.StringVar()
 marco = ttk.Frame(raiz)
 marco.pack()
 
-version = tk.Label(marco,text="Notas v0.01") # Creamos un label
+version = tk.Label(marco,text="Notas v"+numeroversion) # Creamos un label
 version.pack()                              # Lo añadimos a la ventana
 
 inputusuario = ttk.Entry(marco,textvariable = varusuario)              # Creo una entrada para que el usuario diga quien es
