@@ -230,6 +230,7 @@ raiz.attributes("-alpha",0.9)               # Añado  un efecto de transparencia
 raiz.resizable(0,0)                         # Impido que el usuario pueda redimensionar la ventana
 estilo = ttk.Style()                        # Añado soporte para estilos
 estilo.theme_use('default')                 # Selecciono el estilo clásico de aplicaciones
+raiz.protocol("WM_DELETE_WINDOW", guardaNotas) # Cuando cierres la ventana, guarda las notas
 
 # DECLARO VARIABLES GLOBALES DEL PROGRAMA
 
