@@ -251,7 +251,7 @@ def cargaNota(mitexto,color,fecha,posx,posy,anchura,altura,fuente,tamanio):
     
     texto = tk.Text(marcotexto,bg="white",borderwidth=0,bd=0)
     texto.config(highlightthickness = 0, borderwidth=0)
-    Font_tuple = ("Comic Sans MS", tamanio, "bold")
+    Font_tuple = ("sans-serif", 10, "bold") # linea retocar
     texto.configure(font = Font_tuple)
     texto.insert("1.0",mitexto)
     texto.pack()
