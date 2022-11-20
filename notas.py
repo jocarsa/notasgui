@@ -334,7 +334,7 @@ def guardaNotasSalir():
 raiz = tk.Tk()                              # Creo una interfaz gráfica de usuario
 raiz.title("Notas v"+numeroversion)                   # Especifico el título de la ventana
 raiz.geometry('200x200+20+50')              # Geomtria de la ventana y margen con la pantalla
-raiz.attributes("-topmost",True)            # Siempre encima del resto de las ventanas
+#raiz.attributes("-topmost",True)            # Siempre encima del resto de las ventanas
 raiz.attributes("-alpha",0.9)               # Añado  un efecto de transparencia
 raiz.resizable(0,0)                         # Impido que el usuario pueda redimensionar la ventana
 estilo = ttk.Style()                        # Añado soporte para estilos
